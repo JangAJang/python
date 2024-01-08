@@ -18,7 +18,7 @@ optimizer = tf.keras.optimizers.Adam(learning_rate=0.1)
 # minimize로 업데이트를 실행시킨다. 변수로는 손실함수 & 업데이트시킬 변수들을 넣어야 한다. 
 for i in range (300): 
     for index in range(len(heights)):
-        optimizer.minimize(loss_function(heights[index], foot_sizes[index]),[a, b])
+        optimizer.minimize(loss_function(heights[index], foot_sizes[index]),var_list = [a, b])
 
 print(a.numpy())
 print(b.numpy())
