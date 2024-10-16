@@ -2,6 +2,7 @@ import sys
 
 import pandas as pd
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 
@@ -77,3 +78,8 @@ def get_optimized_leaf_nodes_count(train_X, val_X, train_y, val_y):
 # 최적의 리프 노드 수와 그에 따른 최소 MAE 출력
 best_leaf_nodes, min_mae = get_optimized_leaf_nodes_count(train_X, val_X, train_y, val_y)
 print(f"Best leaf nodes: {best_leaf_nodes}, Minimum MAE: {min_mae}")
+
+forest_model = RandomForestRegressor(random_state=1)
+forest_model.fit(train_X, train_y)
+melb_preds = forest_model.predict(val_X)
+print(mean_absolute_error(val_y, melb_preds))
