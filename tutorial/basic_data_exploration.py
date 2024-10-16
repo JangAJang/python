@@ -1,3 +1,5 @@
+import sys
+
 import pandas as pd
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_absolute_error
@@ -40,4 +42,38 @@ melbourne_model.fit(train_X, train_y)
 val_predictions = melbourne_model.predict(val_X)
 print(mean_absolute_error(val_y, val_predictions))
 
+# 과적합, 부적합을 피하기 위한 첫 단계, mae를 구하기
+def get_mae(max_leaf_nodes, train_X, val_X, train_y, val_y):
+    model = DecisionTreeRegressor(max_leaf_nodes=max_leaf_nodes, random_state=0)
+    model.fit(train_X, train_y)
+    preds_val = model.predict(val_X)
+    mae = mean_absolute_error(val_y, preds_val)
+    return(mae)
 
+# 각 최대 리프노드당 MAE 구하기 : 리프노드 수가 많아질 수록 과적합에 가까워진다. 적을수로 부적합에 가까워진다.
+
+def get_optimized_leaf_nodes_count(train_X, val_X, train_y, val_y):
+    left = 5
+    right = melbourne_data.shape[0]
+    min_mae = 100000000000000
+    best_leaf_nodes = left
+
+    while left <= right:
+        mid = (left + right) // 2
+        mae = get_mae(mid, train_X, val_X, train_y, val_y)
+
+        if mae < min_mae:
+            min_mae = mae
+            best_leaf_nodes = mid
+
+        # 이분 탐색 진행: mae가 감소하는 방향을 기준으로 탐색 범위를 줄임
+        if get_mae(mid - 1, train_X, val_X, train_y, val_y) < mae:
+            right = mid - 1
+        else:
+            left = mid + 1
+
+    return best_leaf_nodes, min_mae
+
+# 최적의 리프 노드 수와 그에 따른 최소 MAE 출력
+best_leaf_nodes, min_mae = get_optimized_leaf_nodes_count(train_X, val_X, train_y, val_y)
+print(f"Best leaf nodes: {best_leaf_nodes}, Minimum MAE: {min_mae}")
