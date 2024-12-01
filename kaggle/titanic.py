@@ -61,3 +61,33 @@ sbn.violinplot(x='Sex', y='Age', hue='Survived', data=data, split=True, ax=ax[1]
 ax[1].set_title('Sex and Age vs Survived')
 ax[1].set_yticks(range(0, 110, 10))
 plt.show()
+
+data['Initial'] = 0
+for i in data :
+    data['Initial'] = data.Name.str.extract('([A-Za-z]+)\.')
+
+data['Initial'].replace(
+    ['Mlle', 'Mme', 'Ms', 'Dr', 'Major', 'Lady', 'Countess', 'Jonkheer', 'Col', 'Rev', 'Capt', 'Sir', 'Don'],
+    ['Mrs', 'Mrs', 'Mrs', 'Mr', 'Mr', 'Mrs', 'Mrs', 'Other', 'Other', 'Other', 'Mr', 'Mr', 'Mr'], inplace=True)
+
+data.groupby('Initial')['Age'].mean()
+
+data.loc[(data.Age.isnull() & (data.Initial == 'Mr')), 'Age']=33
+data.loc[(data.Age.isnull() & (data.Initial == 'Mrs')), 'Age']=36
+data.loc[(data.Age.isnull() & (data.Initial == 'Master')), 'Age']=5
+data.loc[(data.Age.isnull() & (data.Initial == 'Miss')), 'Age']=22
+data.loc[(data.Age.isnull() & (data.Initial == 'Other')), 'Age']=46
+
+f, ax = plt.subplots(1, 2, figsize=(18, 8))
+
+data[data['Survived'] == 0].Age.plot.hist(ax=ax[0], bins=20, edgecolor='black', color='red')
+ax[0].set_title='Survived = 0'
+x1 = list(range(0, 85, 5))
+ax[0].set_xticks(x1)
+
+data[data['Survived'] == 1].Age.plot.hist(ax=ax[1], bins=20, edgecolor='black', color='green')
+ax[0].set_title='Survived = 1'
+x2 = list(range(0, 85, 5))
+ax[0].set_xticks(x2)
+
+plt.show()
