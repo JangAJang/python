@@ -91,3 +91,30 @@ x2 = list(range(0, 85, 5))
 ax[0].set_xticks(x2)
 
 plt.show()
+
+sbn.catplot(x='Pclass', y='Survived', col='Initial', data=data, kind='point')
+plt.show()
+
+pd.crosstab([data.Embarked, data.Pclass], [data.Sex, data.Survived], margins=True).style.background_gradient(cmap='summer_r')
+
+sbn.catplot(x='Embarked', y='Survived', data=data, kind='point')
+fig = plt.gcf()
+fig.set_size_inches(5, 5)
+plt.show()
+
+f, ax = plt.subplots(2, 2, figsize=(20, 15))
+
+sbn.countplot(x='Embarked', data=data, ax=ax[0, 0])
+ax[0, 0].set_title('No. of Passengers Boarded')
+
+sbn.countplot(x='Embarked', hue='Sex', data=data, ax=ax[0, 1])
+ax[0, 1].set_title('Make-Female split by Embarked')
+
+sbn.countplot(x='Embarked', hue='Survived', data=data, ax=ax[1, 0])
+ax[0, 1].set_title('Embarked vs Survived')
+
+sbn.countplot(x='Embarked', hue='Pclass', data=data, ax=ax[1, 1])
+ax[0, 1].set_title('Embarked vs Pclass')
+
+plt.subplots_adjust(wspace=0.3, hspace=0.1)
+plt.show()
