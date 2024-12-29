@@ -169,3 +169,49 @@ ax[2].set_title = 'Fares in Pclass 3'
 ax[2].set_xlim([0, 600])
 
 plt.show()
+
+numeric_data = data.select_dtypes(include=[float, int])
+
+# 상관관계 히트맵 생성
+sbn.heatmap(numeric_data.corr(), annot=True, cmap='RdYlGn', linewidths=0.2)
+
+fig=plt.gcf()
+fig.set_size_inches(10, 8)
+plt.show()
+
+data['Age_band'] = 0
+data.loc[data['Age']<=16, 'Age_band'] = 0
+data.loc[(data['Age'] >16) & (data['Age']<=32), 'Age_band'] = 1
+data.loc[(data['Age'] >32) & (data['Age']<=48), 'Age_band'] = 2
+data.loc[(data['Age'] >48) & (data['Age']<=64), 'Age_band'] = 3
+data.loc[data['Age'] > 64, 'Age_band'] = 4
+data.head(2)
+
+data['Age_band'].value_counts().to_frame().style.background_gradient(cmap='summer')
+
+sbn.pointplot(x='Age_band', y='Survived', data=data)
+plt.show()
+
+data['Family_size'] = data['Parch'] + data['SibSp']
+
+data.loc[data.Family_size == 0, 'Alone'] = 1
+data.loc[data.Family_size != 0, 'Alone'] = 0
+
+f, ax = plt.subplots(1, 2, figsize = (18, 6))
+
+sbn.pointplot(x = 'Family_size', y = 'Survived', data=data, ax=ax[0])
+ax[0].set_title('Family_size vs Survived')
+
+sbn.pointplot(x = 'Alone', y = 'Survived', data = data, ax = ax[1])
+ax[1].set_title('Alone vs Survived')
+
+plt.close(2)
+plt.close(3)
+plt.show()
+
+sbn.catplot(x = 'Alone', y = 'Survived', data = data, hue = 'Sex', col = 'Pclass', kind='point')
+plt.show()
+
+data['Fare_Range'] = pd.qcut(data['Fare'], 4)
+
+data.groupby(['Fare_Range'])['Survived'].mean().to_frame().style.background_gradient(cmap='summer_r')
