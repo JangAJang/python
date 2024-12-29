@@ -118,3 +118,54 @@ ax[0, 1].set_title('Embarked vs Pclass')
 
 plt.subplots_adjust(wspace=0.3, hspace=0.1)
 plt.show()
+
+sbn.catplot(x='Pclass', y='Survived', hue='Sex', col='Embarked', data=data, kind='point')
+plt.show()
+
+data['Embarked'].fillna('S', inplace=True)
+
+data.Embarked.isnull().any()
+
+pd.crosstab([data.SibSp], data.Survived).style.background_gradient(cmap='summer_r')
+
+f, ax = plt.subplots(1, 2, figsize=(20, 8))
+sbn.barplot(x = 'SibSp', y = 'Survived', data=data, ax=ax[0])
+ax[0].set_title('SibSp vs Survived')
+
+sbn.pointplot(x = 'SibSp', y = 'Survived', data=data, ax=ax[1])
+ax[1].set_title('SibSp vs Survived')
+
+plt.close(2)
+plt.show()
+
+pd.crosstab(data.SibSp, data.Pclass).style.background_gradient(cmap='summer_r')
+
+pd.crosstab(data.Parch, data.Pclass).style.background_gradient(cmap='summer_r')
+
+f, ax = plt.subplots(1, 2, figsize=(20, 8))
+sbn.barplot(x='Parch', y='Survived', data=data, ax=ax[0])
+ax[0].set_title('Parch vs Survived')
+
+sbn.pointplot(x='Parch', y='Survived', data=data, ax=ax[1])
+ax[1].set_title('Parch vs Survived')
+
+plt.close(2)
+plt.show()
+
+data['Fare'].describe()
+
+f, ax = plt.subplots(1, 3, figsize=(20, 8))
+
+sbn.distplot(data[data['Pclass'] == 1]['Fare'], ax=ax[0])
+ax[0].set_title = 'Fares in Pclass 1'
+ax[0].set_xlim([0, 600])
+
+sbn.distplot(data[data['Pclass'] == 2]['Fare'], ax=ax[1])
+ax[1].set_title = 'Fares in Pclass 2'
+ax[1].set_xlim([0, 600])
+
+sbn.distplot(data[data['Pclass'] == 3]['Fare'], ax=ax[2])
+ax[2].set_title = 'Fares in Pclass 3'
+ax[2].set_xlim([0, 600])
+
+plt.show()
