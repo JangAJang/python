@@ -38,7 +38,7 @@
 - [x] MNIST CNN 구현 ([mnist_cnn](/pytorch_study/mnist_cnn.ipynb))
 - [x] MNIST 기초 ([mnist_intro](/pytorch_study/mnist_intro.ipynb))
 - [x] VGG 네트워크 구현 ([vgg](/pytorch_study/vgg.ipynb))
-- [ ] ResNet 구현
+- [x] ResNet 구현
 - [ ] EfficientNet 구현
 
 ### Phase 4. GPU 프로그래밍 (CUDA / LeetGPU)
