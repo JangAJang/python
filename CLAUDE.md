@@ -13,7 +13,7 @@
 | `kaggle/` | Kaggle 대회 풀이 |
 | `leetcode/` | 알고리즘 문제 풀이 (날짜별 파일) |
 | `leetgpu/` | CUDA GPU 프로그래밍 실습 (LeetGPU) |
-| `pytorch_study/` | PyTorch 딥러닝 기초~CNN~RNN (가장 큰 폴더, `rnn/` 하위 포함) |
+| `pytorch_study/` | PyTorch 딥러닝 기초~Transformer/CV 심화 (가장 큰 폴더, `NN_phase/MM_topic/` 구조, 자세히는 [pytorch_study/README.md](pytorch_study/README.md)) |
 | `algorithm_solver/` | 알고리즘 문제 분류용 스크립트 (nltk/sklearn 기반) |
 | `tensorflow_basic/` | TensorFlow 기초 예제 |
 | `tutorial/` | Kaggle 튜토리얼 (Melbourne housing) |
@@ -36,6 +36,7 @@
 ## 핵심 규칙 · 하지 말 것
 
 - `.gitignore`로 대용량 산출물(`hands_on_machine_learning/datasets`, `hands_on_machine_learning/images`, `pytorch_study/cifar10`, `pytorch_study/MNIST_data`, `pytorch_study/custom_data`, `pytorch_study/model`)이 제외되어 있음 — 이 경로들은 로컬 실행 시 자동 생성/다운로드되는 데이터이므로 커밋 대상이 아니다.
+- `pytorch_study/`의 각 주제 폴더는 `concept.md`(이론) · `example.ipynb`(최소 예제) · `practice.ipynb`(Kaggle/LeetGPU 실습) 3파일 세트 컨벤션을 따른다 — 새 주제 추가 시 이 패턴을 그대로 따를 것. 진도/링크는 루트 `README.md` 표가 유일한 관리처이므로 다른 문서에 중복 기재하지 않는다.
 - 스크립트 안의 상대경로(`pd.read_csv('gpascore.csv')`, `melb_data.csv` 등)는 **해당 폴더를 cwd로 실행**하는 것을 전제로 작성됨. 리포 루트에서 바로 실행하면 파일을 못 찾는다.
 - `leetcode/`의 파일명은 `YYYY_MM_DD` 형식(풀이한 날짜)을 따른다. 신규 항목 추가 시 [새 학습 항목 추가하기](docs/runbooks/새-학습-항목-추가.md) 참고.
 - 루트 `README.md`의 Phase 체크리스트는 실제 진행 상황을 반영하는 문서이므로, 새 학습 결과물을 추가할 때 함께 갱신하는 편이 좋다(단, 매 커밋마다 강제되는 규칙은 아니며 과거 커밋에서도 종종 생략됨).
